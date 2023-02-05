@@ -2,43 +2,29 @@
 #include <vector>
 #include "Reader.h"
 #include "Writer.h"
-#include "Parser.h"
-#include "EcpriParser.h"
 #include "EthernetPacket.h"
+#include "EcpriPacket.h"
+#include "PacketFactory.h"
 using namespace std;
 
-enum class PacketType { ethernet, ecpri };
 
-PacketType get_packet_type(const string& packet) {
-    if (packet.substr(40, 4) == "AEFE")
-        return PacketType::ecpri;
-    return PacketType::ethernet;
-           
-}
-
-Parser* generate_parser(PacketType type) {
-    switch (type) {
-        case PacketType::ethernet: return new Parser();
-        case PacketType::ecpri: return new EcpriParser();
-        default: return nullptr;
-    }
-}
-
-int main() {
+int main(int argc, char** argv) {
     try {
-        Reader reader("../input_packets");
-        vector<string> packets = reader.read();
+        if (argc != 3) throw string("Invalid number of arguments");
+
+        Reader reader(argv[1]);
+        vector<string> packets = reader.read_all();
         
-        Writer writer("output");
+        Writer writer(argv[2]);
         for (int id = 0; id < packets.size(); ++id) {
-            PacketType type = get_packet_type(packets[id]);
-            Parser* parser = generate_parser(type);
-            EthernetPacket* parsed_packet = parser->parse(id, packets[id]);
-            writer.write(parsed_packet);
+            PacketType type = EthernetPacket::get_packet_type(packets[id]);
+            EthernetPacket* packet = PacketFactory::generate_packet(type);
+            packet->parse(id, packets[id]);
+            writer.write(packet);
         }
-        
+        cout << "Success\n";
     } catch (const string& err) {
-        cout << err;
+        cerr << err;
     }
     return 0;
 }

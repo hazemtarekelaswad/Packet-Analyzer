@@ -14,7 +14,7 @@ private:
 
 public:
     Reader(const string& file_path);
-    vector<string> read();
+    vector<string> read_all();
     ~Reader();
 };
 

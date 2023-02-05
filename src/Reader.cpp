@@ -15,7 +15,7 @@ Reader::Reader(const string& file_path) {
     }
 }
 
-vector<string> Reader::read() {
+vector<string> Reader::read_all() {
     vector<string> packets;
     while (!input_file_.eof()) {
         string packet;
