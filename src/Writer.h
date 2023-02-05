@@ -10,6 +10,10 @@
 
 using namespace std;
 
+/*
+    This class is responsible for writing packets to an output file.
+*/
+
 class Writer {
 private:
     ofstream output_file_;

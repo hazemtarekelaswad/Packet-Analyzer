@@ -7,6 +7,10 @@ using namespace std;
 
 enum class PacketType { ethernet, ecpri };
 
+/*
+    This class is responsible for parsing and storing the data of an ethernet packet.
+*/
+
 class EthernetPacket {
 protected:
     unsigned int id_;
@@ -17,17 +21,6 @@ protected:
     string type_;
 
 public:
-    // void set_crc(const string& crc);
-    // void set_destination_address(const string& destination_address);
-    // void set_source_address(const string& source_address);
-    // void set_type(const string& type);
-
-    // unsigned int get_id() const;
-    // string get_packet() const;
-    // string get_crc() const;
-    // string get_destination_address() const;
-    // string get_source_address() const;
-    // string get_type() const;
 
     virtual void parse(unsigned int id, const string& packet);
     virtual string to_string() const;

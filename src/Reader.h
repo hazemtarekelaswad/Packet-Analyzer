@@ -8,6 +8,9 @@
 
 using namespace std;
 
+/*
+    This class is responsible for reading packets from an input file.
+*/
 class Reader {
 private:
     ifstream input_file_;
