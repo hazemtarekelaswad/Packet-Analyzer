@@ -28,6 +28,7 @@ int main(int argc, char** argv) {
             EthernetPacket* packet = PacketFactory::generate_packet(type);
             packet->parse(id, packets[id]);
             writer.write(packet);
+            delete packet;
         }
         cout << "Success\n";
     } catch (const string& err) {
